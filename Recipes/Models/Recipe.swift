@@ -14,6 +14,17 @@ struct Recipe: Hashable, Codable, Identifiable {
     var img: String
     var title: String
     var summary: String
-    var isFavorite: Bool
+    var isFavorite: Bool?
 
+    var steps: [Step]?
+    var ingredients: [Ingredient]?
+    var serving: [String]?
+
+    struct Step: Codable, Hashable {
+        var img: String?
+        var text: String
+    }
+    struct Ingredient: Codable, Hashable {
+        var text: String
+    }
 }

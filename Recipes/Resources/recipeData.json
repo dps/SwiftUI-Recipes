@@ -1,47 +1,52 @@
-{
-    "total": 7,
-    "recipes": [
+[
         {
             "name": "recipe-beef-brisket-chili.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-beef-brisket-chili/main.jpg",
             "title": "Beef brisket chili",
-            "summary": "The mother of all chilis."
+            "summary": "The mother of all chilis.",
+            "id": 1,
         },
         {
             "name": "recipe-zucchini-and-meatballs-pasta-bake.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-zucchini-meatballs/main.jpg",
             "title": "Zucchini and Meatballs pasta bake",
-            "summary": "Delicious, cozy meatball dish."
+            "summary": "Delicious, cozy meatball dish.",
+            "id": 2,
         },
         {
             "name": "recipe-8-hour-lamb-shoulder.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-8-hour-lamb-shoulder/main.jpg",
             "title": "8 hour lamb shoulder",
-            "summary": "Delicious melt in the mouth lamb dish."
+            "summary": "Delicious melt in the mouth lamb dish.",
+            "id": 3,
         },
         {
             "name": "recipe-northern-irish-vegetable-soup.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-northern-irish-vegetable-soup/main.jpg",
             "title": "Northern irish vegetable soup",
-            "summary": "This recipe is apparently unique to Northern Ireland and uses soup/herb celery which is hard to find outside the area, but regular table celery can be substituted (including the leaves)."
+            "summary": "This recipe is apparently unique to Northern Ireland and uses soup/herb celery which is hard to find outside the area, but regular table celery can be substituted (including the leaves).",
+            "id": 4,
         },
         {
             "name": "recipe-chicken-dhansak.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-chicken-dhansak/chicken_dhansak.jpg",
             "title": "Chicken Dhansak",
-            "summary": "\nWonderful spicy persian/gujarati stew."
+            "summary": "\nWonderful spicy persian/gujarati stew.",
+            "id": 5,
         },
         {
             "name": "recipe-super-simple-guacamole.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-super-simple-guacamole/main.jpg",
             "title": "Super simple guacamole",
-            "summary": "Some guacamole recipes call for many ingredients and can be a pain to prepare.  This super simple guac can be thrown together in a couple of minutes and tastes great."
+            "summary": "Some guacamole recipes call for many ingredients and can be a pain to prepare.  This super simple guac can be thrown together in a couple of minutes and tastes great.",
+            "id": 6,
         },
         {
             "name": "recipe-sous-vide-pork-ribs.md",
             "img": "https://github.com/dps/recipes/raw/master/imgs-sous-vide-pork-ribs/sous-vide-ribs.jpg",
             "title": "Sous vide BBQ pork ribs",
-            "summary": "\nMy best barbecue ribs recipe"
+            "summary": "\nMy best barbecue ribs recipe",
+            "id": 7,
         }
-    ]
-}
+]
+
