@@ -11,6 +11,8 @@ import UIKit
 import SwiftUI
 
 let recipeData: [Recipe] = load("recipeData.json")
+let recipeDetails: Recipe = load("recipeDetails.json")
+
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data

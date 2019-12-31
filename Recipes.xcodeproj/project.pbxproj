@@ -24,6 +24,7 @@
 		AA54D0D523BA927800775CFC /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54D0D423BA927800775CFC /* Data.swift */; };
 		AA54D0D723BAA08B00775CFC /* Fetchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54D0D623BAA08B00775CFC /* Fetchers.swift */; };
 		AA54D0D923BAA0F000775CFC /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54D0D823BAA0F000775CFC /* Views.swift */; };
+		AA54D0DB23BAA71E00775CFC /* RecipeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA54D0DA23BAA71E00775CFC /* RecipeDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		AA54D0D423BA927800775CFC /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		AA54D0D623BAA08B00775CFC /* Fetchers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetchers.swift; sourceTree = "<group>"; };
 		AA54D0D823BAA0F000775CFC /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		AA54D0DA23BAA71E00775CFC /* RecipeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				AA54D08823BA8D4F00775CFC /* RecipeRow.swift */,
 				AA54D0D623BAA08B00775CFC /* Fetchers.swift */,
 				AA54D0D823BAA0F000775CFC /* Views.swift */,
+				AA54D0DA23BAA71E00775CFC /* RecipeDetail.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				AA54D08023BA8AD600775CFC /* RecipeList.swift in Sources */,
 				AA54D04C23BA42EA00775CFC /* ContentView.swift in Sources */,
 				AA54D07A23BA45D500775CFC /* Recipe.swift in Sources */,
+				AA54D0DB23BAA71E00775CFC /* RecipeDetail.swift in Sources */,
 				AA54D08923BA8D4F00775CFC /* RecipeRow.swift in Sources */,
 				AA54D0D523BA927800775CFC /* Data.swift in Sources */,
 				AA54D0D923BAA0F000775CFC /* Views.swift in Sources */,
