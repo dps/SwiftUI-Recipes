@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RecipeList: View {
-    @EnvironmentObject private var userData: UserData
     @ObservedObject var recipeListFetcher = RecipeListFetcher()
 
     var stateContent: AnyView {
@@ -27,7 +26,6 @@ struct RecipeList: View {
                     ForEach(response.recipes) { recipe in
                         NavigationLink(
                             destination: RecipeDetail(recipe: recipe)
-                                .environmentObject(self.userData)
                         ) {
                             RecipeRow(recipe: recipe)
                         }
@@ -62,6 +60,5 @@ struct RecipeList_Previews: PreviewProvider {
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 .previewDisplayName(deviceName)
         }
-        .environmentObject(UserData())
     }
 }
