@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeList: View {
     @EnvironmentObject private var userData: UserData
     @ObservedObject var recipeListFetcher = RecipeListFetcher()
-    
+
     var stateContent: AnyView {
         switch recipeListFetcher.state {
         case .loading:
@@ -44,7 +44,7 @@ struct RecipeList: View {
                 
                 VStack {
                     
-                    TextField("Search", text: $userData.searchQuery).textFieldStyle(RoundedBorderTextFieldStyle()).padding(6)
+                    TextField("Search", text: $recipeListFetcher.searchQuery).textFieldStyle(RoundedBorderTextFieldStyle()).padding(6)
                     Spacer()
                     stateContent
                     Spacer()

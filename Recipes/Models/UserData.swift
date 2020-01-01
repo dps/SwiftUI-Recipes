@@ -12,4 +12,6 @@ final class UserData: ObservableObject {
     @Published var showFavoritesOnly = false
     @Published var recipes = recipeData
     @Published var searchQuery = ""
+    @ObservedObject var recipeListFetcher = RecipeListFetcher()
+
 }

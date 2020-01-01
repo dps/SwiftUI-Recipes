@@ -51,7 +51,11 @@ class ImageFetcher: ObservableObject {
 }
 
 class RecipeListFetcher: ObservableObject {
-    var query: String?
+    var searchQuery: String = "" {
+        didSet {
+            self.update();
+        }
+    }
     
     private static let apiUrlString = API_BASE + "/api/list"
     let objectWillChange = ObservableObjectPublisher()
@@ -62,12 +66,13 @@ class RecipeListFetcher: ObservableObject {
         }
     }
     
-    init(withQuery query: String? = nil) {
-        guard let apiUrl = URL(string: RecipeListFetcher.apiUrlString) else {
+    func update() {
+        state = .loading
+        guard let apiUrl = URL(string: RecipeListFetcher.apiUrlString + "?q=" + searchQuery) else {
             state = .fetched(.failure(.error("Malformed API URL.")))
             return
         }
-        
+
         URLSession.shared.dataTask(with: apiUrl) { [weak self] (data, resp, error) in
             if let error = error {
                 self?.state = .fetched(.failure(.error(error.localizedDescription)))
@@ -91,5 +96,9 @@ class RecipeListFetcher: ObservableObject {
                 self?.state = .fetched(.success(response))
             }
         }.resume()
+    }
+    
+    init() {
+        update()
     }
 }
