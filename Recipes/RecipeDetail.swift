@@ -36,7 +36,7 @@ struct RecipeDetail: View {
                 )
             case .success(let recipe):
                 return AnyView(
-                    full(recipe: recipe)
+                    full(recipe: recipe).animation(Animation.easeIn(duration: 0.5))
                 )
             }
         }
