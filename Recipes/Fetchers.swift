@@ -102,3 +102,51 @@ class RecipeListFetcher: ObservableObject {
         update()
     }
 }
+
+class RecipeDetailFetcher: ObservableObject {
+    
+    private static let apiUrlString = API_BASE + "/api/recipe"
+    let objectWillChange = ObservableObjectPublisher()
+    
+    var state: LoadableState<Recipe> = .loading {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
+    
+    func update(path: String) {
+        state = .loading
+        guard let apiUrl = URL(string: RecipeDetailFetcher.apiUrlString + "/" + path + "?hup=2") else {
+            state = .fetched(.failure(.error("Malformed API URL.")))
+            return
+        }
+
+        URLSession.shared.dataTask(with: apiUrl) { [weak self] (data, resp, error) in
+            if let error = error {
+                self?.state = .fetched(.failure(.error(error.localizedDescription)))
+                return
+            }
+            
+            guard let data = data else {
+                self?.state = .fetched(.failure(.error("Malformed response data")))
+                return
+            }
+            
+            let httpResponse = resp as! HTTPURLResponse
+            if (httpResponse.statusCode != 200) {
+                self?.state = .fetched(.failure(.error("Bad HTTP Response: \(httpResponse.statusCode)")))
+                return
+            }
+            
+            let response = try! JSONDecoder().decode(Recipe.self, from: data)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.state = .fetched(.success(response))
+            }
+        }.resume()
+    }
+    
+    init(path: String) {
+        update(path: path)
+    }
+}

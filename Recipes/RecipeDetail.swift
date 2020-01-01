@@ -9,14 +9,64 @@
 import SwiftUI
 
 struct RecipeDetail: View {
-    var recipe: Recipe
+    @ObservedObject var recipeDetailFetcher: RecipeDetailFetcher
+
+    var partialRecipe: Recipe
     
-    init(recipe recipe: Recipe) {
-        self.recipe = recipeDetails
+    init(path: String, partialRecipe: Recipe) {
+        self.partialRecipe = partialRecipe
+        self.recipeDetailFetcher = RecipeDetailFetcher(path: path)
     }
     
     var body: some View {
-        ScrollView {
+        stateContent
+    }
+    
+    var stateContent: AnyView {
+        switch recipeDetailFetcher.state {
+        case .loading:
+            return AnyView(
+                partial(message: "Loading...")
+            )
+        case .fetched(let result):
+            switch result {
+            case .failure(let error):
+                return AnyView(
+                    partial(message: error.localizedDescription)
+                )
+            case .success(let recipe):
+                return AnyView(
+                    full(recipe: recipe)
+                )
+            }
+        }
+    }
+    
+    func partial(message: String) -> some View {
+        return ScrollView {
+            VStack {
+                HStack {
+                    LoadableImageView(with: partialRecipe.img).scaledToFill()
+                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: Alignment.center)
+                
+                VStack {
+                    Text(partialRecipe.title)
+                        .font(.largeTitle)
+                    Text(partialRecipe.summary)
+                }.padding().background(Color.white.opacity(1.0).border(Color.white.opacity(0.5), width: 2)).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
+                Spacer()
+                Text(message)
+                    .font(.headline)
+                    .foregroundColor(Color.blue)
+                Spacer()
+            }
+        }.edgesIgnoringSafeArea(.top)
+        
+    }
+    
+    
+    func full(recipe: Recipe) -> some View {
+        return ScrollView {
             VStack {
                 HStack {
                     LoadableImageView(with: recipe.img).scaledToFill()
@@ -67,6 +117,6 @@ struct RecipeDetail: View {
 
 struct RecipeDetail_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetail(recipe: recipeDetails)
+        RecipeDetail(path: "recipe-beef-brisket-chili.md", partialRecipe: recipeDetails)
     }
 }

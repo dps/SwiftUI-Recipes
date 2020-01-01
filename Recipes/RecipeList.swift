@@ -25,7 +25,7 @@ struct RecipeList: View {
                     //List {  // If you want list UI style use this instead of ScrollView
                     ForEach(response.recipes) { recipe in
                         NavigationLink(
-                            destination: RecipeDetail(recipe: recipe)
+                            destination: RecipeDetail(path: recipe.name, partialRecipe: recipe)
                         ) {
                             RecipeRow(recipe: recipe)
                         }
