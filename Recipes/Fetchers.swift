@@ -68,7 +68,7 @@ class RecipeListFetcher: ObservableObject {
             return
         }
         
-        URLSession.shared.dataTask(with: apiUrl) { [weak self] (data, _, error) in
+        URLSession.shared.dataTask(with: apiUrl) { [weak self] (data, resp, error) in
             if let error = error {
                 self?.state = .fetched(.failure(.error(error.localizedDescription)))
                 return
@@ -78,6 +78,13 @@ class RecipeListFetcher: ObservableObject {
                 self?.state = .fetched(.failure(.error("Malformed response data")))
                 return
             }
+            
+            let httpResponse = resp as! HTTPURLResponse
+            if (httpResponse.statusCode != 200) {
+                self?.state = .fetched(.failure(.error("Bad HTTP Response: \(httpResponse.statusCode)")))
+                return
+            }
+            
             let response = try! JSONDecoder().decode(Response.self, from: data)
             
             DispatchQueue.main.async { [weak self] in
