@@ -5,6 +5,9 @@
 //  Created by David Singleton on 12/30/19.
 //  Copyright © 2019 David Singleton. All rights reserved.
 //
+// The original version which was modified for these is MIT licensed per:
+//   https://github.com/schmidyy/SwiftUI-ListFetching/blob/master/LICENSE
+// Thanks Mat!
 
 import Combine
 import Foundation
