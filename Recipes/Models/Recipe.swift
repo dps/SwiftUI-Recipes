@@ -8,6 +8,12 @@
 
 import SwiftUI
 
+struct Response: Codable {
+    var total: Int
+    var q: String?
+    var recipes: [Recipe]
+}
+
 struct Recipe: Hashable, Codable, Identifiable {
     var id: Int
     var name: String

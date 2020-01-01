@@ -9,6 +9,25 @@
 import Combine
 import Foundation
 
+//let API_BASE = "http://recipefe.us.davidsingleton.org"
+let API_BASE = "http://localhost:8000"
+
+enum LoadableState<T> {
+    case loading
+    case fetched(Result<T, FetchError>)
+}
+
+enum FetchError: Error {
+    case error(String)
+    
+    var localizedDescription: String {
+        switch self {
+        case .error(let message):
+            return message
+        }
+    }
+}
+
 class ImageFetcher: ObservableObject {
     let objectWillChange = ObservableObjectPublisher()
     var data: Data = Data() {
@@ -26,6 +45,43 @@ class ImageFetcher: ObservableObject {
             guard let data = data else { return }
             DispatchQueue.main.async { [weak self] in
                 self?.data = data
+            }
+        }.resume()
+    }
+}
+
+class RecipeListFetcher: ObservableObject {
+    var query: String?
+    
+    private static let apiUrlString = API_BASE + "/api/list"
+    let objectWillChange = ObservableObjectPublisher()
+    
+    var state: LoadableState<Response> = .loading {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
+    
+    init(withQuery query: String? = nil) {
+        guard let apiUrl = URL(string: RecipeListFetcher.apiUrlString) else {
+            state = .fetched(.failure(.error("Malformed API URL.")))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: apiUrl) { [weak self] (data, _, error) in
+            if let error = error {
+                self?.state = .fetched(.failure(.error(error.localizedDescription)))
+                return
+            }
+            
+            guard let data = data else {
+                self?.state = .fetched(.failure(.error("Malformed response data")))
+                return
+            }
+            let response = try! JSONDecoder().decode(Response.self, from: data)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.state = .fetched(.success(response))
             }
         }.resume()
     }

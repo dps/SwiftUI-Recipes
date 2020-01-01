@@ -9,21 +9,39 @@ import SwiftUI
 
 struct RecipeList: View {
     @EnvironmentObject private var userData: UserData
+    @ObservedObject var recipeListFetcher = RecipeListFetcher()
+
+    var stateContent: AnyView {
+        switch recipeListFetcher.state {
+        case .loading:
+            return AnyView(Text("Loading"))
+        case .fetched(let result):
+            switch result {
+                case .failure(let error):
+                    return AnyView(
+                        Text(error.localizedDescription)
+                    )
+                case .success(let response):
+                    return AnyView(
+                        ForEach(response.recipes) { recipe in
+                            NavigationLink(
+                                destination: RecipeDetail(recipe: recipe)
+                                    .environmentObject(self.userData)
+                            ) {
+                                RecipeRow(recipe: recipe)
+                            }
+                        }
+                    )
+                }
+            }
+    }
     
     var body: some View {
+
         NavigationView {
             List {
-
                 TextField("Search", text: $userData.searchQuery)
-                
-                ForEach(userData.recipes) { recipe in
-                    NavigationLink(
-                        destination: RecipeDetail(recipe: recipe)
-                            .environmentObject(self.userData)
-                    ) {
-                        RecipeRow(recipe: recipe)
-                    }
-                }
+                stateContent
             }
             .navigationBarTitle(Text("Recipes"))
         }
