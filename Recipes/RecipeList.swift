@@ -22,7 +22,7 @@ struct RecipeList: View {
                 )
             case .success(let response):
                 return AnyView(
-                    //List {  // If you want list UI style use this instead of ScrollView
+                    //List {  // If you prefer list UI style use this instead of a ScrollView
                     ForEach(response.recipes) { recipe in
                         NavigationLink(
                             destination: RecipeDetail(path: recipe.name, partialRecipe: recipe)
