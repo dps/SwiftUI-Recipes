@@ -9,16 +9,18 @@
 import SwiftUI
 
 struct RecipeRow: View {
+    let MEAL_EMOJI = ["🍜","🍝","🍱","🌯","🥗","🥘","🌮","🍲","🌭","🍛"]
+    let THUMBNAILER = "http://thumbor.us.davidsingleton.org/unsafe/400x400/"
     var recipe: Recipe
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(recipe.title).font(.headline)
-                //Text(recipe.summary).font(.subheadline)
             }.padding(8.0)
             Spacer()
-            LoadableImageView(with: recipe.img).scaledToFill().frame(width:100, height:100).cornerRadius(8.0).padding(8.0)
+            LoadableImageView(with: THUMBNAILER + recipe.img,
+                              placeholder: MEAL_EMOJI[recipe.id % MEAL_EMOJI.count]).scaledToFit().frame(width:100, height:100).cornerRadius(8.0).padding(8.0)
         }
     }
 }

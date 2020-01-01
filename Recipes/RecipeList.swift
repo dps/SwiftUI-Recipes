@@ -17,7 +17,12 @@ struct RecipeList: View {
                 TextField("Search", text: $userData.searchQuery)
                 
                 ForEach(userData.recipes) { recipe in
+                    NavigationLink(
+                        destination: RecipeDetail(recipe: recipe)
+                            .environmentObject(self.userData)
+                    ) {
                         RecipeRow(recipe: recipe)
+                    }
                 }
             }
             .navigationBarTitle(Text("Recipes"))
@@ -27,7 +32,7 @@ struct RecipeList: View {
 
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(["iPhone SE", "iPhone XS Max"], id: \.self) { deviceName in
+        ForEach(["iPhone SE"], id: \.self) { deviceName in
             RecipeList()
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 .previewDisplayName(deviceName)

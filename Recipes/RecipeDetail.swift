@@ -11,6 +11,10 @@ import SwiftUI
 struct RecipeDetail: View {
     var recipe: Recipe
     
+    init(recipe recipe: Recipe) {
+        self.recipe = recipeDetails
+    }
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -22,7 +26,7 @@ struct RecipeDetail: View {
                     Text(recipe.title)
                         .font(.largeTitle)
                     Text(recipe.summary)
-                }.padding().background(Color.white.opacity(1.0).border(Color.white.opacity(0.5), width: 2)).cornerRadius(8).offset(y:-100).padding(.bottom, -100)
+                }.padding().background(Color.white.opacity(1.0).border(Color.white.opacity(0.5), width: 2)).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
                 VStack(alignment: .leading) {
                     if recipe.ingredients != nil {
                         Text("Ingredients")

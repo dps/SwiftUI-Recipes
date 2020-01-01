@@ -11,23 +11,13 @@
 
 import SwiftUI
 
-struct ActivityIndicator: UIViewRepresentable {
-    let style: UIActivityIndicatorView.Style
-    
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
-    }
-    
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        uiView.startAnimating()
-    }
-}
-
 struct LoadableImageView: View {
     @ObservedObject var imageFetcher: ImageFetcher
+    var placeholder: String
     
-    init(with urlString: String) {
+    init(with urlString: String, placeholder: String = "🍽") {
         imageFetcher = ImageFetcher(url: urlString)
+        self.placeholder = placeholder
     }
     
     var body: some View {
@@ -37,7 +27,9 @@ struct LoadableImageView: View {
             )
         } else {
             return AnyView(
-                ActivityIndicator(style: .medium)
+                Text(placeholder)
+                    .font(Font.system(size: 100))
+                    .frame(width: 400, height: 400, alignment: Alignment.center)
             )
         }
     }
