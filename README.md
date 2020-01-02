@@ -5,7 +5,7 @@ A demo app showing how to fetch data from the server to populate list views, nav
 ### About
 This project is a SwiftUI implementation of my goto recipe app example for playing around in new languages / environments.
 
-<img src="screenshots/list.png" width=400 />
+<img src="screenshots/list.png" width=400 /> <img src="screenshots/light.png" width=400 />
 
 ### Usage
 1. Clone or download this project
