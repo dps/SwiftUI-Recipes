@@ -16,7 +16,7 @@ struct RecipeRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(recipe.title).font(.headline).foregroundColor(Color.black)
+                Text(recipe.title).font(.headline)
             }.padding(8.0)
             Spacer()
             LoadableImageView(with: THUMBNAILER + recipe.img,

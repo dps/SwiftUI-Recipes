@@ -10,7 +10,8 @@ import SwiftUI
 
 struct RecipeDetail: View {
     @ObservedObject var recipeDetailFetcher: RecipeDetailFetcher
-
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    
     var partialRecipe: Recipe
     
     init(path: String, partialRecipe: Recipe) {
@@ -42,6 +43,10 @@ struct RecipeDetail: View {
         }
     }
     
+    var fillColor: Color {
+        return (colorScheme == ColorScheme.light) ? Color.white : Color.black
+    }
+    
     func partial(message: String) -> some View {
         return ScrollView {
             VStack {
@@ -53,7 +58,7 @@ struct RecipeDetail: View {
                     Text(partialRecipe.title)
                         .font(.largeTitle)
                     Text(partialRecipe.summary)
-                }.padding().background(Color.white.opacity(1.0).border(Color.white.opacity(0.5), width: 2)).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
+                }.padding().background(fillColor).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
                 Spacer()
                 Text(message)
                     .font(.headline)
@@ -64,51 +69,78 @@ struct RecipeDetail: View {
         
     }
     
-    
     func full(recipe: Recipe) -> some View {
-        return ScrollView {
+        return Group {
             VStack {
                 HStack {
                     LoadableImageView(with: recipe.img).scaledToFill()
-                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: Alignment.center)
+                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 200, alignment: Alignment.center)
                 
                 VStack {
                     Text(recipe.title)
                         .font(.largeTitle)
                     Text(recipe.summary)
-                }.padding().background(Color.white.opacity(1.0).border(Color.white.opacity(0.5), width: 2)).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
+                }.padding().background(fillColor).cornerRadius(8).offset(y:-50).padding(.bottom, -50)
                 VStack(alignment: .leading) {
-                    if recipe.ingredients != nil {
-                        Text("Ingredients")
-                            .font(.caption)
-                            .foregroundColor(Color.blue)
-                        ForEach(recipe.ingredients!, id:\.self) { ingredient in
-                            HStack {
-                                Text("-")
-                                Text(ingredient.text)
-                            }.padding(4)
+                    TabView {
+                        
+                        if recipe.ingredients != nil {
+                            ScrollView {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("Ingredients")
+                                            .font(.caption)
+                                            .foregroundColor(Color.blue).padding()
+                                        ForEach(recipe.ingredients!, id:\.self) { ingredient in
+                                            HStack {
+                                                Text("-")
+                                                Text(ingredient.text)
+                                            }.padding(8)
+                                        }
+                                        Spacer().frame(height:20)
+                                    }
+                                    Spacer()
+                                }
+                            }.tabItem {
+                                Image(systemName: "1.square.fill")
+                                Text("Ingredients")
+                            }.animation(nil)
                         }
-                        Spacer().frame(height:20)
-                    }
-                    if recipe.steps != nil {
-                        Text("Steps")
-                            .font(.caption)
-                            .foregroundColor(Color.blue)
-                        ForEach(recipe.steps!, id:\.self) { step in
-                            HStack(alignment: .top) {
-                                Text("👣").padding(4)
-                                Text(step.text).font(.headline)
-                            }.fixedSize(horizontal: false, vertical: true).padding()
+                        if recipe.steps != nil {
+                            ScrollView {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("Steps")
+                                            .font(.caption)
+                                            .foregroundColor(Color.blue).padding()
+                                        ForEach(recipe.steps!, id:\.self) { step in
+                                            HStack {
+                                                Text("👣").padding()
+                                                Text(step.text)
+                                            }.padding(8)
+                                        }
+                                        Spacer().frame(height:20)
+                                    }
+                                    Spacer()
+                                }
+                            }.tabItem {
+                                Image(systemName: "2.square.fill")
+                                Text("Steps")
+                            }.animation(nil)
                         }
-                        Spacer().frame(height:20)
-                    }
-                    if recipe.serving != nil {
-                        Text("Serving").font(.caption).foregroundColor(Color.blue)
-                        ForEach(recipe.serving!, id:\.self) { serving in
-                            Text(serving).fixedSize(horizontal: false, vertical: true).padding()
+                        if recipe.serving != nil {
+                            VStack {
+                                Text("Serving").font(.caption).foregroundColor(Color.blue)
+                                ForEach(recipe.serving!, id:\.self) { serving in
+                                    Text(serving).fixedSize(horizontal: false, vertical: true).padding()
+                                }
+                            } .tabItem{
+                                Image(systemName: "3.square.fill")
+                                Text("Serving")
+                            }
                         }
                     }
-                }.padding(8.0)
+                }.padding(0)
             }
         }.edgesIgnoringSafeArea(.top)
         

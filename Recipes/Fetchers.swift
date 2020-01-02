@@ -12,8 +12,8 @@
 import Combine
 import Foundation
 
-//let API_BASE = "http://recipefe.us.davidsingleton.org"
-let API_BASE = "http://localhost:8000"
+let API_BASE = "http://recipefe.us.davidsingleton.org"
+//let API_BASE = "http://localhost:8000"
 
 enum LoadableState<T> {
     case loading
@@ -60,7 +60,6 @@ class RecipeListFetcher: ObservableObject {
         }
     }
     
-    private static let apiUrlString = API_BASE + "/api/list"
     let objectWillChange = ObservableObjectPublisher()
     
     var state: LoadableState<Response> = .loading {
@@ -71,7 +70,8 @@ class RecipeListFetcher: ObservableObject {
     
     func update() {
         state = .loading
-        guard let apiUrl = URL(string: RecipeListFetcher.apiUrlString + "?q=" + searchQuery) else {
+        let apiUrlString = API_BASE + ((searchQuery.count > 0) ? "/api/search" : "/api/list")
+        guard let apiUrl = URL(string: apiUrlString + "?q=" + searchQuery) else {
             state = .fetched(.failure(.error("Malformed API URL.")))
             return
         }

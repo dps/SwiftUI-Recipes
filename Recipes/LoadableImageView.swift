@@ -23,7 +23,7 @@ struct LoadableImageView: View {
     var body: some View {
         if let image = UIImage(data: imageFetcher.data) {
             return AnyView(
-                Image(uiImage: image).resizable()
+                Image(uiImage: image).resizable().renderingMode(.original)
             )
         } else {
             return AnyView(
