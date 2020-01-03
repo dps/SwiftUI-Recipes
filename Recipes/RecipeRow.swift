@@ -10,7 +10,7 @@ import SwiftUI
 
 struct RecipeRow: View {
     let MEAL_EMOJI = ["🍜","🍝","🍱","🌯","🥗","🥘","🌮","🍲","🌭","🍛"]
-    let THUMBNAILER = "http://thumbor.us.davidsingleton.org/unsafe/400x400/"
+    let THUMBNAILER = "http://thumbor.us.davidsingleton.org/unsafe/80x80/"
     var recipe: Recipe
     
     var body: some View {

@@ -37,7 +37,7 @@ struct RecipeDetail: View {
                 )
             case .success(let recipe):
                 return AnyView(
-                    full(recipe: recipe).animation(Animation.easeIn(duration: 0.5))
+                    full(recipe: recipe)
                 )
             }
         }
@@ -68,6 +68,7 @@ struct RecipeDetail: View {
         }.edgesIgnoringSafeArea(.top)
         
     }
+
     
     func header(recipe: Recipe) -> some View {
         return Group {
@@ -110,7 +111,7 @@ struct RecipeDetail: View {
                             }.edgesIgnoringSafeArea(.top).tabItem {
                                 Image(systemName: "1.square.fill")
                                 Text("Ingredients")
-                            }.animation(nil)
+                            }
                         }
                         if recipe.steps != nil {
                             ScrollView {
@@ -134,9 +135,9 @@ struct RecipeDetail: View {
                             }.edgesIgnoringSafeArea(.top).tabItem {
                                 Image(systemName: "2.square.fill")
                                 Text("Steps")
-                            }.animation(nil)
+                            }
                         }
-                        if recipe.serving != nil {
+                        if recipe.serving != nil && recipe.serving!.count > 0{
                             ScrollView {
                                 header(recipe:recipe)
                                 
@@ -158,9 +159,9 @@ struct RecipeDetail: View {
                             }.edgesIgnoringSafeArea(.top).tabItem{
                                 Image(systemName: "3.square.fill")
                                 Text("Serving")
-                            }.animation(nil)
+                            }
                         }
-                    }
+                    }.transition(AnyTransition.opacity.animation(.easeInOut))
                 }.padding(0)
             }
         }.edgesIgnoringSafeArea(.top)
