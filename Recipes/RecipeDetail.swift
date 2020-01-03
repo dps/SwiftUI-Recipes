@@ -58,7 +58,7 @@ struct RecipeDetail: View {
                     Text(partialRecipe.title)
                         .font(.largeTitle)
                     Text(partialRecipe.summary)
-                }.padding().background(fillColor).cornerRadius(8).offset(y:-80).padding(.bottom, -80)
+                }.padding().background(fillColor).cornerRadius(8).offset(y:-30).padding(.bottom, -30)
                 Spacer()
                 Text(message)
                     .font(.headline)
@@ -69,23 +69,29 @@ struct RecipeDetail: View {
         
     }
     
+    func header(recipe: Recipe) -> some View {
+        return Group {
+            HStack {
+                LoadableImageView(with: recipe.img).scaledToFill()
+            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 200, alignment: Alignment.center)
+            
+            VStack {
+                Text(recipe.title)
+                    .font(.largeTitle)
+                Text(recipe.summary)
+            }.padding().background(fillColor).cornerRadius(8).offset(y:-30).padding(.bottom, -30)
+        }
+    }
+    
     func full(recipe: Recipe) -> some View {
         return Group {
             VStack {
-                HStack {
-                    LoadableImageView(with: recipe.img).scaledToFill()
-                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 200, alignment: Alignment.center)
-                
-                VStack {
-                    Text(recipe.title)
-                        .font(.largeTitle)
-                    Text(recipe.summary)
-                }.padding().background(fillColor).cornerRadius(8).offset(y:-50).padding(.bottom, -50)
                 VStack(alignment: .leading) {
                     TabView {
-                        
                         if recipe.ingredients != nil {
                             ScrollView {
+                                header(recipe:recipe)
+                                
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text("Ingredients")
@@ -101,13 +107,15 @@ struct RecipeDetail: View {
                                     }
                                     Spacer()
                                 }
-                            }.tabItem {
+                            }.edgesIgnoringSafeArea(.top).tabItem {
                                 Image(systemName: "1.square.fill")
                                 Text("Ingredients")
                             }.animation(nil)
                         }
                         if recipe.steps != nil {
                             ScrollView {
+                                header(recipe:recipe)
+                                
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text("Steps")
@@ -123,21 +131,34 @@ struct RecipeDetail: View {
                                     }
                                     Spacer()
                                 }
-                            }.tabItem {
+                            }.edgesIgnoringSafeArea(.top).tabItem {
                                 Image(systemName: "2.square.fill")
                                 Text("Steps")
                             }.animation(nil)
                         }
                         if recipe.serving != nil {
-                            VStack {
-                                Text("Serving").font(.caption).foregroundColor(Color.blue)
-                                ForEach(recipe.serving!, id:\.self) { serving in
-                                    Text(serving).fixedSize(horizontal: false, vertical: true).padding()
+                            ScrollView {
+                                header(recipe:recipe)
+                                
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text("Serving")
+                                            .font(.caption)
+                                            .foregroundColor(Color.blue).padding()
+                                        ForEach(recipe.serving!, id:\.self) { serve in
+                                            HStack {
+                                                Text("🍽").padding()
+                                                Text(serve)
+                                            }.padding(8)
+                                        }
+                                        Spacer().frame(height:20)
+                                    }
+                                    Spacer()
                                 }
-                            } .tabItem{
+                            }.edgesIgnoringSafeArea(.top).tabItem{
                                 Image(systemName: "3.square.fill")
                                 Text("Serving")
-                            }
+                            }.animation(nil)
                         }
                     }
                 }.padding(0)
