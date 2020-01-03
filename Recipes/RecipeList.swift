@@ -28,7 +28,7 @@ struct RecipeList: View {
                             destination: RecipeDetail(path: recipe.name, partialRecipe: recipe)
                         ) {
                             RecipeRow(recipe: recipe)
-                        }
+                        }.buttonStyle(PlainButtonStyle())
                     //}
                     }
                 )
@@ -55,7 +55,7 @@ struct RecipeList: View {
 
 struct RecipeList_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(["iPhone SE"], id: \.self) { deviceName in
+        ForEach(["iPhone 11 Pro"], id: \.self) { deviceName in
             RecipeList()
                 .previewDevice(PreviewDevice(rawValue: deviceName))
                 .previewDisplayName(deviceName)

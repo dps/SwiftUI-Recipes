@@ -15,12 +15,17 @@ struct RecipeRow: View {
     
     var body: some View {
         HStack {
+            LoadableImageView(with: THUMBNAILER + recipe.img,
+                              placeholder: MEAL_EMOJI[recipe.id % MEAL_EMOJI.count]).scaledToFit().frame(width:80, height:80).cornerRadius(8.0).padding(8.0)
+
             VStack(alignment: .leading) {
-                Text(recipe.title).font(.headline)
+                Spacer()
+                Text(recipe.title).font(.headline).fontWeight(.semibold).lineLimit(1)
+                Text(recipe.summary.trimmingCharacters(in: .whitespacesAndNewlines)).font(.caption).fontWeight(.light).lineLimit(1).padding(.top, 3.0)
+                Spacer()
             }.padding(8.0)
             Spacer()
-            LoadableImageView(with: THUMBNAILER + recipe.img,
-                              placeholder: MEAL_EMOJI[recipe.id % MEAL_EMOJI.count]).scaledToFit().frame(width:100, height:100).cornerRadius(8.0).padding(8.0)
+
         }
     }
 }
